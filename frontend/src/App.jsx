@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
-import AdminDashbord from "./pages/Dashbord/AdminDashbord/index";
+import Sidebar from "./pages/Dashbord/index";
 import "./App.css";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
       />
       <Route
         path="/admin"
-        element={<AdminDashbord />}
+        element={<Sidebar />}
       />
     </Routes>
   );

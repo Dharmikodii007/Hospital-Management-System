@@ -18,4 +18,14 @@ export const loginAdmin = async (formData) => {
   }
 };
 
+export const addDoctorData = async (formData) => {
+  try {
+    const response = await api.post("/doctor", formData);
+
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.error);
+  }
+};
+
 export default api;
