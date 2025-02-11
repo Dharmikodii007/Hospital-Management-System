@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io"; // Assuming this is the left arrow icon
 import { setPage } from "../../../Redux/slices/sidebarSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const SidebarItem = ({ item, index, openCategories, toggleCategory }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const dispatch = useDispatch();
+  const Currentmenu = useSelector((state) => state.sidebar.menu);
+  const [isOpen, setIsOpen] = useState(Currentmenu);
 
   const PageDetails = (name) => {
     dispatch(setPage(name));
   };
+
+  useEffect(() => {
+    setIsOpen(Currentmenu);
+    console.log(isOpen);
+  }, [Currentmenu]);
 
   return (
     <div className="overflow-y-auto scrollbar-hide">
@@ -21,11 +28,17 @@ const SidebarItem = ({ item, index, openCategories, toggleCategory }) => {
         }`}
         onClick={() => item.category && toggleCategory(index)}>
         <span className="text-[20px] text-[#b2b6bf]">{item.logo}</span>
-        <span className="text-[14px] text-[#cfd8e3] opacity-75 font-bold">
+        <span
+          className={`text-[14px] text-[#cfd8e3] opacity-75 font-bold ${
+            isOpen == false ? "hidden" : "block"
+          }`}>
           {item.name}
         </span>
         {item.category && (
-          <span className="ml-auto text-[14px] text-[#CFD8E3]">
+          <span
+            className={`ml-auto text-[14px] text-[#CFD8E3] ${
+              isOpen == false ? "hidden" : "block"
+            }`}>
             {openCategories[index] ? <FaMinus /> : <FaPlus />}
           </span>
         )}
@@ -33,7 +46,7 @@ const SidebarItem = ({ item, index, openCategories, toggleCategory }) => {
 
       {/* Subcategory Dropdown */}
       {openCategories[index] && item.category && (
-        <div className="ml-0 mt-1">
+        <div className={`ml-0 mt-1 ${isOpen == false ? "hidden" : "block"}`}>
           {item.category.map((sub, subIndex) => (
             <div
               key={subIndex}
@@ -42,9 +55,12 @@ const SidebarItem = ({ item, index, openCategories, toggleCategory }) => {
               onMouseLeave={() => setHoveredIndex(null)}
               onClick={() => PageDetails(sub.pagename)}>
               {subIndex === hoveredIndex && (
-                <IoIosArrowForward className="text-[#cfd8e3] absolute" />
+                <IoIosArrowForward className="text-[#cfd8e3] " />
               )}
-              <span className="text-[14px] ml-8 text-[#cfd8e3] opacity-75 font-bold">
+              <span
+                className={`text-[14px] text-[#cfd8e3] opacity-75 font-bold ${
+                  subIndex === hoveredIndex ? "ml-0" : "ml-8"
+                }`}>
                 {sub.name}
               </span>
             </div>

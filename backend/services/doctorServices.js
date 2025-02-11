@@ -1,6 +1,7 @@
 const db = require("../models/index");
 const { where } = require("sequelize");
 const bcrypt = require("bcryptjs");
+const cloudinary = require("../cloudinary/cloudinary");
 const Doctor = db.Doctor;
 
 const doctorServices = {
@@ -30,6 +31,12 @@ const doctorServices = {
       throw new Error("All required fields must be provided!");
     }
 
+    const cloudinary_url = await cloudinary.uploader.upload(doctorimg, {
+      folder: "/DoctorImage",
+    });
+
+    console.log(cloudinary_url.secure_url);
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const doctorData = await Doctor.create({
@@ -44,7 +51,7 @@ const doctorServices = {
       email,
       birth,
       education,
-      doctorimg,
+      doctorimg: cloudinary_url.secure_url,
     });
 
     return doctorData;
@@ -76,6 +83,18 @@ const doctorServices = {
     const doctorData = await Doctor.findOne({ where: { id } });
 
     return doctorData;
+  },
+
+  dltDoctorByIdService: async (id) => {
+    const doctorData = await Doctor.findOne({ where: { id } });
+
+    if (!doctorData) {
+      return { success: false, message: "Doctor not found" };
+    }
+
+    await Doctor.destroy({ where: { id } });
+
+    return { success: true, message: "Doctor deleted successfully" };
   },
 
   loginDoctorService: async (email, password) => {

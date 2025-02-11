@@ -3,10 +3,10 @@ import useFloatingLabel from "./FloatingLabel";
 import {
   FloatingInput,
   FloatingInputLong,
-  ImageUpload,
-} from "../../../Utils/Form/FormUtils";
+} from "../../../../Utils/Form/FormUtils";
 import { FiHome } from "react-icons/fi";
-import { addDoctorData } from "../../../../Api/Api";
+import { addDoctorData } from "../../../../../Api/Api";
+import { FiUpload } from "react-icons/fi";
 
 function AddDoctor() {
   const firstName = useFloatingLabel();
@@ -21,39 +21,45 @@ function AddDoctor() {
   const education = useFloatingLabel();
   const [gender, setGender] = useState("");
   const [department, setDepartment] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [dragging, setDragging] = useState(false);
 
   const handleImageUpload = (e) => {
-    setImage(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setImage(reader.result); // Stores image as Base64
+      };
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    const formData = new FormData();
-    formData.append("firstName", firstName.value);
-    formData.append("lastName", lastName.value);
-    formData.append("mobile", mobile.value);
-    formData.append("password", password.value);
-    formData.append("designation", designation.value);
-    formData.append("address", address.value);
-    formData.append("email", email.value);
-    formData.append("dob", dob.value);
-    formData.append("education", education.value);
-    formData.append("gender", gender);
-    formData.append("department", department);
-    formData.append("image", image);
+    const formData = {
+      firstName: firstName.value,
+      lastName: lastName.value,
+      gender: gender,
+      mobile: mobile.value,
+      password: password.value,
+      designation: designation.value,
+      department: department,
+      address: address.value,
+      email: email.value,
+      birth: dob.value,
+      education: education.value,
+      doctorimg: image,
+    };
 
     try {
       const response = await addDoctorData(formData);
 
-      const result = await response.json();
-      if (response.ok) {
+      if (response) {
         alert("Doctor added successfully!");
-      } else {
-        alert(result.message || "Failed to add doctor.");
       }
     } catch (error) {
       alert("Error: " + error.message);
@@ -76,7 +82,7 @@ function AddDoctor() {
         <span>Add Doctor</span>
       </div>
 
-      <div className="bg-[#232b3e] shadow-lg p-5 rounded-lg">
+      <div className="bg-[#232b3e] shadow-lg p-5 ">
         <form
           className="bg-[#1a202e] md:p-4 max-md:p-3 rounded-2xl"
           onSubmit={handleSubmit}>
@@ -227,7 +233,33 @@ function AddDoctor() {
               <label className="absolute left-3 px-2 text-[#96a2b4] bg-[#1a202e] transition-all top-[-10px] text-[12px]">
                 Upload Image*
               </label>
-              <ImageUpload onUpload={handleImageUpload} />
+              <div
+                className={`border-2 border-dotted ${
+                  dragging ? "border-white" : "border-[#96a2b4]/50"
+                } rounded-lg p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 bg-transparent text-white outline-none focus:border-white`}>
+                <label className="cursor-pointer flex flex-col items-center">
+                  {image ? (
+                    <img
+                      src={image}
+                      alt="Preview"
+                      className="w-20 h-20 object-cover rounded-full mb-3"
+                    />
+                  ) : (
+                    <>
+                      <FiUpload className="text-2xl text-[#96a2b4] mb-2" />
+                      <p className="text-sm">Drag & Drop an image here</p>
+                      <p className="text-sm text-[#96a2b4]">
+                        or click to select
+                      </p>
+                    </>
+                  )}
+                  <input
+                    type="file"
+                    className="hidden"
+                    onChange={handleImageUpload}
+                  />
+                </label>
+              </div>
             </div>
 
             {/* Submit Button */}

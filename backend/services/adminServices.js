@@ -1,24 +1,37 @@
 const { where } = require("sequelize");
 const db = require("../models/index");
+const { generateToken } = require("../middleware/Auth");
 const User = db.User;
 
 const adminService = {
-  getAdminService: async (username, password) => {
+  findAdminService: async (username, password) => {
     if (!username || !password) {
       throw new Error("username and password are required!");
     }
 
-    const exiting = await User.findOne({ where: { username } });
+    const user = await User.findOne({ where: { username } });
 
-    if (!exiting) {
+    if (!user) {
       throw new Error("admin not exit!");
     }
 
-    if (exiting.password != password) {
+    if (user.password != password) {
       throw new Error("password is does not match!");
     }
 
-    return exiting;
+    const payload = {
+      username: user.username,
+      id: user.id,
+    };
+
+    const token = await generateToken(payload);
+
+    return { user, token };
+  },
+
+  getAdminService: async (user) => {
+    const userData = await User.findOne({ where: { username: user } });
+    return userData;
   },
 };
 

@@ -106,6 +106,19 @@ const doctorController = {
     }
   },
 
+  dltDoctorById: async (req, res) => {
+    const id = req.params.id;
+
+    const response = await doctorServices.dltDoctorByIdService(id);
+
+    res.status(201).json(response);
+    try {
+    } catch (error) {
+      console.log(error);
+      res.status(401).json("error during delete doctor by id");
+    }
+  },
+
   loginDoctor: async (req, res) => {
     const { email, password } = req.body;
 

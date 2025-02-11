@@ -3,9 +3,26 @@ import { SideBarData } from "./SidebarData";
 import SidebarItem from "./SidebarItem";
 import Logo from "../../../assets/logo.png";
 import adminImg from "../../../assets/admin-img.jpg";
+import { getAdmin } from "../../../Api/Api";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const [openCategories, setOpenCategories] = useState({ 0: true });
+  const [admin, setAdmin] = useState({});
+  const Currentmenu = useSelector((state) => state.sidebar.menu);
+
+  useEffect(() => {
+    const fetchAdmin = async () => {
+      try {
+        const response = await getAdmin();
+        setAdmin(response);
+      } catch (error) {
+        console.error("Error fetching admin:", error);
+      }
+    };
+
+    fetchAdmin();
+  }, []);
 
   const toggleCategory = (index) => {
     setOpenCategories((prev) => ({
@@ -14,22 +31,35 @@ const Sidebar = () => {
     }));
   };
 
+  useEffect(() => {
+    console.log("Updated Sidebar Visibility:", Currentmenu);
+  }, [Currentmenu]);
+
   return (
-    <div className="p-4 bg-[#1a202e] text-white h-[100vh] overflow-y-auto no-scrollbar">
+    <div
+      className={`p-4 text-white h-full overflow-y-auto no-scrollbar bg-[#1a202e]  `}>
       {/* Logo Section */}
-      <div className="flex items-center justify-center fixed bg-[#1a202e] w-[200px]">
+      <div className="flex items-center justify-center  bg-[#1a202e]  pb-4">
         <span className="flex items-center gap-2">
           <img
             src={Logo}
             alt="Logo"
-            className="h-8 ml-5"
+            className={``}
           />
-          <span className="text-[24px] font-bold">Cliniva</span>
+          <span
+            className={`text-[24px] font-bold ${
+              Currentmenu ? "block" : "hidden"
+            }`}>
+            Cliniva
+          </span>
         </span>
       </div>
 
       {/* Admin Profile */}
-      <div className="flex flex-col items-center gap-2 py-7 pt-20 ">
+      <div
+        className={`flex flex-col items-center gap-2 py-7 pt-10 ${
+          Currentmenu ? "block" : "hidden"
+        }`}>
         <img
           className="h-[75px] w-[75px] rounded-2xl border-2 border-white"
           src={adminImg}
@@ -37,15 +67,15 @@ const Sidebar = () => {
         />
         <div className="flex flex-col items-center">
           <span className="text-[14px] text-[#e6e6e6] font-bold">
-            Dharmik Odedara
+            {admin?.username || "Admin"}
           </span>
           <span className="text-[11px] opacity-95">ADMIN</span>
         </div>
       </div>
 
       {/* Sidebar Menu */}
-      <div className="mt-6">
-        <span className="text-[12px] ml-3 text-[#9BABF1] font-medium">
+      <div className={`mt-6 ${Currentmenu ? "block" : "hidden"}`}>
+        <span className={`"text-[12px] ml-3 text-[#9BABF1] font-medium `}>
           MAIN
         </span>
       </div>
