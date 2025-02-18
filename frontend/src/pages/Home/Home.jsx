@@ -41,7 +41,7 @@ function Home() {
 
         if (response) {
           setSuccess(`Login successful as ${selectedRole}`);
-          navigate("/admin");
+          navigate("/dashbord");
         } else {
           setError(result.message || "Login failed.");
         }

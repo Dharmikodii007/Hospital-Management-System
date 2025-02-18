@@ -95,10 +95,12 @@ function AddDoctor() {
             <div className="flex max-md:flex-col gap-6 w-full">
               <FloatingInput
                 label="First Name*"
+                labelBgColor="#1a202e"
                 {...firstName}
               />
               <FloatingInput
                 label="Last Name*"
+                labelBgColor="#1a202e"
                 {...lastName}
               />
             </div>
@@ -139,6 +141,7 @@ function AddDoctor() {
 
               <FloatingInput
                 label="Mobile*"
+                labelBgColor="#1a202e"
                 {...mobile}
               />
             </div>
@@ -147,11 +150,13 @@ function AddDoctor() {
             <div className="flex gap-6 w-full max-md:flex-col">
               <FloatingInput
                 label="Password*"
+                labelBgColor="#1a202e"
                 type="password"
                 {...password}
               />
               <FloatingInput
                 label="Re-enter Password*"
+                labelBgColor="#1a202e"
                 type="password"
                 {...confirmPassword}
               />
@@ -161,6 +166,7 @@ function AddDoctor() {
             <div className="flex gap-6 w-full max-md:flex-col">
               <FloatingInput
                 label="Designation*"
+                labelBgColor="#1a202e"
                 {...designation}
               />
               <div className="mt-5 relative w-full">
@@ -205,6 +211,7 @@ function AddDoctor() {
             {/* Address */}
             <FloatingInputLong
               label="Address*"
+              labelBgColor="#1a202e"
               {...address}
             />
 
@@ -213,10 +220,12 @@ function AddDoctor() {
               <FloatingInput
                 label="Email*"
                 type="email"
+                labelBgColor="#1a202e"
                 {...email}
               />
               <FloatingInput
                 label="Date of Birth*"
+                labelBgColor="#1a202e"
                 type="date"
                 {...dob}
               />
@@ -225,6 +234,7 @@ function AddDoctor() {
             {/* Education */}
             <FloatingInputLong
               label="Education*"
+              labelBgColor="#1a202e"
               {...education}
             />
 

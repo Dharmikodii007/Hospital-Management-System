@@ -5,11 +5,14 @@ import { getAdmin } from "../../../Api/Api";
 import { IoMdMenu } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { setMenu } from "../../../Redux/slices/sidebarSlice";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [admin, setAdmin] = useState({});
   const [isOpen, setIsOpen] = useState(true);
   const dispatch = useDispatch();
+  const [showLogout, setShowLogout] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAdmin = async () => {
@@ -26,6 +29,12 @@ function Navbar() {
   const handleToggleMenu = () => {
     setIsOpen((prev) => !prev);
     dispatch(setMenu(!isOpen));
+  };
+
+  const handleLogout = () => {
+    navigate("/");
+    localStorage.removeItem("token");
+    setShowLogout(false);
   };
 
   return (
@@ -45,9 +54,19 @@ function Navbar() {
         </span>
         <img
           src={adminImg}
-          className="w-8 h-8 rounded-full border-2 border-white"
+          className="w-8 h-8 rounded-full border-2 border-white cursor-pointer"
           alt="Admin"
+          onClick={() => setShowLogout(!showLogout)}
         />
+        {/* Logout Button (Fixed Visibility) */}
+        {showLogout && (
+          <button
+            onClick={handleLogout}
+            className="absolute top-[60px] right-[10px] bg-black text-white px-4 py-2 text-sm rounded-md shadow-lg transition-all duration-300 hover:bg-red-700 flex gap-2">
+            <FaUserInjured className="text-lg" />
+            Logout
+          </button>
+        )}
       </div>
     </div>
   );

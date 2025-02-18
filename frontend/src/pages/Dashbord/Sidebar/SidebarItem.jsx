@@ -8,16 +8,10 @@ const SidebarItem = ({ item, index, openCategories, toggleCategory }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const dispatch = useDispatch();
   const Currentmenu = useSelector((state) => state.sidebar.menu);
-  const [isOpen, setIsOpen] = useState(Currentmenu);
 
   const PageDetails = (name) => {
     dispatch(setPage(name));
   };
-
-  useEffect(() => {
-    setIsOpen(Currentmenu);
-    console.log(isOpen);
-  }, [Currentmenu]);
 
   return (
     <div className="overflow-y-auto scrollbar-hide">
@@ -30,14 +24,14 @@ const SidebarItem = ({ item, index, openCategories, toggleCategory }) => {
         <span className="text-[20px] text-[#b2b6bf]">{item.logo}</span>
         <span
           className={`text-[14px] text-[#cfd8e3] opacity-75 font-bold ${
-            isOpen == false ? "hidden" : "block"
+            Currentmenu ? "hidden" : "block"
           }`}>
           {item.name}
         </span>
         {item.category && (
           <span
             className={`ml-auto text-[14px] text-[#CFD8E3] ${
-              isOpen == false ? "hidden" : "block"
+              Currentmenu ? "hidden" : "block"
             }`}>
             {openCategories[index] ? <FaMinus /> : <FaPlus />}
           </span>
@@ -46,7 +40,7 @@ const SidebarItem = ({ item, index, openCategories, toggleCategory }) => {
 
       {/* Subcategory Dropdown */}
       {openCategories[index] && item.category && (
-        <div className={`ml-0 mt-1 ${isOpen == false ? "hidden" : "block"}`}>
+        <div className={`ml-0 mt-1 ${Currentmenu ? "hidden" : "block"}`}>
           {item.category.map((sub, subIndex) => (
             <div
               key={subIndex}

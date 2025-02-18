@@ -28,7 +28,7 @@ export const SideBarData = [
     category: [
       { name: "All Doctors", pagename: "AllDoctor" },
       { name: "Add Doctors", pagename: "AddDoctor" },
-      { name: "Edit Doctors", pagename: "EditDoctor" },
+      { name: "Assign Department", pagename: "DoctorDepartment" },
       { name: "Doctors Profile", pagename: "ProfileDoctor" },
     ],
   },

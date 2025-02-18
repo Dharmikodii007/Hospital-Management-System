@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
-import Sidebar from "./pages/Dashbord/index";
+import Dashbord from "./pages/Dashbord/Dashbord.jsx";
 import "./App.css";
 
 function App() {
@@ -12,8 +12,8 @@ function App() {
         element={<Home />}
       />
       <Route
-        path="/admin"
-        element={<Sidebar />}
+        path="/dashbord"
+        element={<Dashbord />}
       />
     </Routes>
   );

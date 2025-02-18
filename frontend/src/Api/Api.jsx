@@ -84,4 +84,86 @@ export const dltDoctorData = async (id) => {
   }
 };
 
+export const AllDepartmentData = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const response = await api.get("/department", { headers });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.error);
+  }
+};
+
+export const AddDepartment = async (formData) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const response = await api.post(`/department`, formData, { headers });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.error);
+  }
+};
+
+export const dltDepartment = async (id) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const response = await api.delete(`/department/${id}`, { headers });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.error);
+  }
+};
+
+export const updateDepartment = async (id, formData) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const response = await api.put(`/department/${id}`, formData, {
+      headers,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.error);
+  }
+};
+
+export const getDepartmentById = async (id) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const response = await api.get(`/department/${id}`, { headers });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.error);
+  }
+};
+
 export default api;
