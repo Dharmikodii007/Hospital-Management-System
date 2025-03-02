@@ -32,7 +32,7 @@ const doctorController = {
         education,
         doctorimg
       );
-      console.log(response);
+
       res.status(201).json(response);
     } catch (error) {
       console.log(error);

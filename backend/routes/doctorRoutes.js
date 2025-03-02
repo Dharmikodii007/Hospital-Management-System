@@ -5,8 +5,16 @@ const { authenticateToken } = require("../middleware/Auth");
 
 doctorRouter.post("/doctor", authenticateToken, doctorController.addDoctor);
 doctorRouter.get("/doctor", authenticateToken, doctorController.getAllDoctor);
-doctorRouter.put("/doctor/:id", doctorController.updateDoctor);
-doctorRouter.get("/doctor/:id", doctorController.getDoctorById);
+doctorRouter.put(
+  "/doctor/:id",
+  authenticateToken,
+  doctorController.updateDoctor
+);
+doctorRouter.get(
+  "/doctor/:id",
+  authenticateToken,
+  doctorController.getDoctorById
+);
 doctorRouter.delete(
   "/doctor/:id",
   authenticateToken,

@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 import { CgGirl } from "react-icons/cg";
 import { IoEyeOutline } from "react-icons/io5";
-import { loginAdmin } from "../../Api/Api";
+import { loginAdmin } from "../../Api/AdminApi";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
@@ -41,6 +41,7 @@ function Home() {
 
         if (response) {
           setSuccess(`Login successful as ${selectedRole}`);
+          localStorage.setItem("token", response.token);
           navigate("/dashbord");
         } else {
           setError(result.message || "Login failed.");

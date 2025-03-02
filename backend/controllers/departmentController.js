@@ -23,12 +23,9 @@ const departmentController = {
         status
       );
 
-      console.log(response);
-
       res.status(201).json(response);
     } catch (error) {
-      console.log(error.message);
-      res.status(401).json(error.message);
+      return res.status(400).json({ error: error.message });
     }
   },
 

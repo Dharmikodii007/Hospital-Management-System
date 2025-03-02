@@ -46,16 +46,39 @@ Object.keys(db).forEach((modelName) => {
 
 db.Doctor = require("./doctor")(sequelize, Sequelize.DataTypes);
 db.Department = require("./department")(sequelize, Sequelize.DataTypes);
+db.Shiftmanagement = require("./shift_management")(
+  sequelize,
+  Sequelize.DataTypes
+);
+db.Patient = require("./patient")(sequelize, Sequelize.DataTypes);
 
-// One-to-Many Association
+db.Appointment = require("./appointment")(sequelize, Sequelize.DataTypes);
+
+// One-to-One Association For Department Start
+
 db.Doctor.hasOne(db.Department, {
   foreignKey: "doctor_id",
   onDelete: "CASCADE",
 });
 
 db.Department.belongsTo(db.Doctor, {
-  foreignKey: "doctor_id", // ✅ Explicitly set foreign key
+  foreignKey: "doctor_id",
 });
+
+// One-to-One Association For Department End
+
+// One-to-One Association For Shift Management Start
+
+db.Doctor.hasOne(db.Shiftmanagement, {
+  foreignKey: "doctor_id",
+  onDelete: "CASCADE",
+});
+
+db.Shiftmanagement.belongsTo(db.Doctor, {
+  foreignKey: "doctor_id",
+});
+
+// One-to-Many Association For Shift Management End
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

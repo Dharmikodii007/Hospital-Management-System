@@ -3,13 +3,24 @@ const db = require("./models/index");
 const adminRouter = require("./routes/adminRoutes");
 const doctorRouter = require("./routes/doctorRoutes");
 const departmentRouter = require("./routes/departmentRoutes");
+const shiftRouter = require("./routes/shiftRoutes");
+const patientRouter = require("./routes/patientRoutes");
+const appointmentRouter = require("./routes/appointmentRouter");
 const cors = require("cors");
 
 const app = express();
 app.use(express.json({ limit: "20mb" }));
 app.use(cors());
 
-app.use("/api", doctorRouter, adminRouter, departmentRouter);
+app.use(
+  "/api",
+  doctorRouter,
+  adminRouter,
+  departmentRouter,
+  shiftRouter,
+  patientRouter,
+  appointmentRouter
+);
 
 const PORT = 4000;
 

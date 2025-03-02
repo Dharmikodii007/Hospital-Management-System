@@ -31,7 +31,7 @@ const departmentService = {
 
       // Create a new department assignment
       const departmentData = await Department.create({
-        doctor_id: doctorid, // ✅ Ensure correct field name
+        doctor_id: doctorid, 
         doctorName: existingDoctor.firstName + " " + existingDoctor.lastName,
         department,
         specialty,
@@ -89,7 +89,7 @@ const departmentService = {
             "experience",
             "status",
           ],
-          foreignKey: "doctor_id", // ✅ Ensure Sequelize joins correctly
+          foreignKey: "doctor_id", 
         },
       ],
     });

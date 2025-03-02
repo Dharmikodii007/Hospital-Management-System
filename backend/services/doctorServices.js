@@ -71,7 +71,21 @@ const doctorServices = {
     const existingDoctor = await Doctor.findOne({ where: { id } });
 
     if (!existingDoctor) {
-      throw new Error("Doctor Not Exits!");
+      throw new Error("Doctor does not exist!");
+    }
+
+    // Check if a new image is provided
+    if (doctorData.doctorimg && doctorData.doctorimg.startsWith("data:image")) {
+      const cloudinaryResponse = await cloudinary.uploader.upload(
+        doctorData.doctorimg,
+        {
+          folder: "/DoctorImage",
+        }
+      );
+
+      doctorData.doctorimg = cloudinaryResponse.secure_url; // Set new image URL
+    } else {
+      doctorData.doctorimg = existingDoctor.doctorimg; // Keep old image if no new one
     }
 
     await existingDoctor.update(doctorData);

@@ -1,7 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
-import Dashbord from "./pages/Dashbord/Dashbord.jsx";
+import Dashbord from "./layout/Dashbord/Dashbord";
+import pages from "./component/AdminPages/AdminPages";
 import "./App.css";
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
       />
       <Route
         path="/dashbord"
-        element={<Dashbord />}
+        element={<Dashbord pages={pages} />}
       />
     </Routes>
   );
