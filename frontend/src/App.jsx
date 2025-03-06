@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import { Dashboard } from "./layout/Dashbord";
 import Home from "./pages/Home/Home";
-import Dashbord from "./layout/Dashbord/Dashbord";
-import pages from "./component/AdminPages/AdminPages";
+import pages from "./constants/AdminPages";
 import "./App.css";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
       />
       <Route
         path="/dashbord"
-        element={<Dashbord pages={pages} />}
+        element={<Dashboard pages={pages} />}
       />
     </Routes>
   );

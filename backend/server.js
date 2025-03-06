@@ -6,6 +6,7 @@ const departmentRouter = require("./routes/departmentRoutes");
 const shiftRouter = require("./routes/shiftRoutes");
 const patientRouter = require("./routes/patientRoutes");
 const appointmentRouter = require("./routes/appointmentRouter");
+const pharmacyRouter = require("./routes/pharmacyRoutes");
 const cors = require("cors");
 
 const app = express();
@@ -19,7 +20,8 @@ app.use(
   departmentRouter,
   shiftRouter,
   patientRouter,
-  appointmentRouter
+  appointmentRouter,
+  pharmacyRouter
 );
 
 const PORT = 4000;

@@ -1,4 +1,4 @@
-import { apiRequest } from "../pages/Utils/ApiUtils/apiUtils";
+import { apiRequest } from "../utils/ApiUtils/apiUtils";
 
 // ✅ Appoinment APIs
 
@@ -6,7 +6,8 @@ import { apiRequest } from "../pages/Utils/ApiUtils/apiUtils";
 export const AllAppoinment = () => apiRequest("get", "/appointment");
 
 /** Fetch Appoinment details by ID */
-export const getAppoinmentById = (id) => apiRequest("get", `/appointment/${id}`);
+export const getAppoinmentById = (id) =>
+  apiRequest("get", `/appointment/${id}`);
 
 /** Add a new Appoinment */
 export const AddAppoinment = (formData) =>
@@ -17,4 +18,5 @@ export const updateAppoinment = (id, formData) =>
   apiRequest("put", `/appointment/${id}`, formData);
 
 /** Delete a Appoinment by ID */
-export const deleteAppoinment = (id) => apiRequest("delete", `/appointment/${id}`);
+export const deleteAppoinment = (id) =>
+  apiRequest("delete", `/appointment/${id}`);

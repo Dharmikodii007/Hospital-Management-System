@@ -1,4 +1,4 @@
-import useFloatingLabel from "../../pages/Dashbord/Pages/Doctors/AddDoctor/FloatingLabel"; // Adjust path as needed
+import useFloatingLabel from "../../pages/admin/doctors/add_doctor/components/FloatingLabel"; // Adjust path as needed
 
 const useFloatingLabels = (fields) => {
   return fields.reduce((acc, field) => {
